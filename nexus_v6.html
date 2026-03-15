@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NEXUS M&A v6 — Strategic Advisory Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ─────────────────────────────────────────────
+   RESET & DESIGN TOKENS
+───────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#000;
+  --bg1:#06080d;--bg2:#0b0f18;--bg3:#0f1520;--bg4:#151d2c;--bg5:#1c2638;
+  --blue:#2b5797;--blue-lt:#3d6fc7;--blue-dk:#1e3f72;
+  --blue-glow:rgba(43,87,151,.15);--blue-glow2:rgba(43,87,151,.25);
+  --silver:#cfd8dc;
+  --t0:#edf1f5;--t1:#aab8c4;--t2:#6b8494;--t3:#3e5260;
+  --green:#4caf50;--green-lt:#66bb6a;--green-dim:rgba(76,175,80,.1);
+  --amber:#ffb300;--amber-dim:rgba(255,179,0,.1);
+  --red:#d32f2f;--red-lt:#ef5350;--red-dim:rgba(211,47,47,.1);
+  --bd:#1a2638;--bd2:#22334a;
+  --mono:'IBM Plex Mono',monospace;--sans:'Inter',sans-serif;
+  --r:2px; --ease:150ms ease;
+}
+html,body{height:100%;background:var(--black);color:var(--t0);font-family:var(--sans);font-size:12px;overflow:hidden}
+::-webkit-scrollbar{width:3px;height:3px}
+::-webkit-scrollbar-track{background:var(--bg1)}
+::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:2px}
+
+/* ─────────────────────────────────────────────
+   LAYOUT SHELL
+───────────────────────────────────────────── */
+.shell{display:flex;flex-direction:column;height:100vh}
+
+/* ─────────────────────────────────────────────
+   TOPBAR
+───────────────────────────────────────────── */
+.topbar{
+  background:var(--bg1);border-bottom:1px solid var(--bd);
+  height:46px;display:flex;align-items:center;
+  justify-content:space-between;padding:0 16px;flex-shrink:0;gap:10px;
+}
+.brand{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.brand-name{font-family:var(--sans);font-size:14px;font-weight:700;letter-spacing:.1px}
+.brand-name em{font-style:normal;color:var(--blue-lt)}
+.brand-tag{
+  font-family:var(--mono);font-size:8.5px;color:var(--blue-lt);
+  padding:1.5px 6px;border:1px solid var(--blue-dk);border-radius:var(--r);
+  letter-spacing:1px;
+}
+.brand-div{width:1px;height:18px;background:var(--bd2)}
+.brand-sub{font-family:var(--sans);font-size:9px;color:var(--t3)}
+.topbar-alerts{display:flex;gap:5px;align-items:center;flex:1;overflow:hidden;padding:0 6px}
+.ab{
+  display:inline-flex;align-items:center;gap:3px;padding:2px 7px;
+  border-radius:var(--r);font-family:var(--mono);font-size:8.5px;
+  font-weight:600;border:1px solid;white-space:nowrap;flex-shrink:0;
+}
+.ab-r{color:var(--red-lt);background:var(--red-dim);border-color:rgba(211,47,47,.3)}
+.ab-a{color:var(--amber);background:var(--amber-dim);border-color:rgba(255,179,0,.28)}
+.ab-g{color:var(--green-lt);background:var(--green-dim);border-color:rgba(76,175,80,.3)}
+.ab-b{color:#7eb3ff;background:var(--blue-glow);border-color:rgba(43,87,151,.4)}
+.ab-s{color:var(--t2);background:rgba(207,216,220,.05);border-color:rgba(207,216,220,.14)}
+.topbar-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.live-pill{display:flex;align-items:center;gap:5px}
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--green-lt);animation:livePulse 2.5s infinite}
+@keyframes livePulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(76,175,80,.5)}50%{opacity:.7;box-shadow:0 0 0 5px rgba(76,175,80,0)}}
+.live-lbl{font-family:var(--mono);font-size:8.5px;color:var(--t2);letter-spacing:.5px}
+
+/* ─────────────────────────────────────────────
+   SCENARIO BAR
+───────────────────────────────────────────── */
+.sc-bar{
+  background:var(--bg2);border-bottom:1px solid var(--bd);
+  height:30px;display:flex;align-items:center;padding:0 16px;gap:7px;flex-shrink:0;
+}
+.sc-lbl{font-family:var(--sans);font-size:8px;font-weight:600;color:var(--t3);letter-spacing:1px;text-transform:uppercase}
+.sc-btn{
+  padding:2px 10px;border-radius:var(--r);font-family:var(--sans);font-size:8.5px;
+  font-weight:500;border:1px solid var(--bd2);background:var(--bg3);color:var(--t2);
+  cursor:pointer;transition:all var(--ease);white-space:nowrap;
+}
+.sc-btn:hover{color:var(--t0);border-color:var(--blue-dk)}
+.sc-btn.on{background:var(--blue-glow);border-color:var(--blue-lt);color:var(--t0)}
+.sc-sep{width:1px;height:14px;background:var(--bd2)}
+.sc-save{
+  padding:2px 9px;border-radius:var(--r);font-family:var(--mono);font-size:8px;
+  font-weight:600;border:1px solid var(--blue-dk);background:transparent;
+  color:var(--blue-lt);cursor:pointer;transition:all var(--ease);letter-spacing:.3px;
+}
+.sc-save:hover{background:var(--blue-glow)}
+.sc-ind{font-family:var(--mono);font-size:8px;color:var(--t3);margin-left:auto}
+.sc-ind span{color:var(--blue-lt)}
+.debounce-indicator{
+  font-family:var(--mono);font-size:7.5px;color:var(--amber);
+  opacity:0;transition:opacity .2s;letter-spacing:.3px;
+}
+.debounce-indicator.visible{opacity:1}
+
+/* ─────────────────────────────────────────────
+   MAIN BODY LAYOUT
+───────────────────────────────────────────── */
+.layout{display:flex;flex:1;overflow:hidden}
+
+/* ─────────────────────────────────────────────
+   SIDEBAR
+───────────────────────────────────────────── */
+.sidebar{
+  width:232px;background:var(--bg1);border-right:1px solid var(--bd);
+  display:flex;flex-direction:column;overflow:hidden;flex-shrink:0;
+}
+.sb-hd{
+  padding:8px 12px 6px;font-family:var(--sans);font-size:8px;
+  font-weight:600;color:var(--t2);letter-spacing:1.2px;text-transform:uppercase;
+  border-bottom:1px solid var(--bd);background:var(--bg2);
+  display:flex;align-items:center;justify-content:space-between;flex-shrink:0;
+}
+.sb-scroll{overflow-y:auto;flex:1;padding-bottom:10px}
+.grp-hd{
+  padding:6px 12px 3px;font-family:var(--sans);font-size:7.5px;font-weight:700;
+  letter-spacing:1.5px;text-transform:uppercase;color:var(--blue-lt);
+  background:rgba(43,87,151,.05);border-top:1px solid var(--bd);border-bottom:1px solid var(--bd);margin-top:3px;
+}
+.irow{padding:2px 12px}
+.ilbl{
+  font-family:var(--sans);font-size:8px;color:var(--t2);font-weight:400;
+  display:flex;align-items:center;gap:4px;margin-bottom:1.5px;
+}
+/* Local inputs — fast, no engine recalc on keypress */
+.sb-input{
+  width:100%;background:var(--bg3);border:1px solid var(--bd);
+  border-radius:var(--r);padding:3px 7px;color:var(--t0);
+  font-family:var(--mono);font-size:10px;outline:none;
+  transition:border-color var(--ease);
+}
+.sb-input:focus{border-color:var(--blue-lt);background:var(--bg4)}
+select.sb-input option{background:var(--bg2)}
+.tg-row{display:flex;align-items:center;justify-content:space-between;padding:4px 12px}
+.tg-lbl{font-family:var(--sans);font-size:8px;color:var(--t2);font-weight:400}
+.tg{position:relative;display:inline-block;width:28px;height:15px}
+.tg input{opacity:0;width:0;height:0}
+.tg-sl{
+  position:absolute;inset:0;background:var(--bg4);border:1px solid var(--bd2);
+  border-radius:8px;cursor:pointer;transition:background .2s;
+}
+.tg-sl::before{
+  content:'';position:absolute;width:9px;height:9px;
+  left:2px;top:2px;background:var(--t3);border-radius:50%;
+  transition:transform .2s,background .2s;
+}
+input:checked+.tg-sl{background:rgba(43,87,151,.35);border-color:var(--blue-lt)}
+input:checked+.tg-sl::before{transform:translateX(13px);background:var(--blue-lt)}
+
+/* ─────────────────────────────────────────────
+   I-BAR TOOLTIP
+───────────────────────────────────────────── */
+.ibar{
+  width:14px;height:14px;border-radius:50%;
+  background:rgba(43,87,151,.12);border:1px solid var(--blue-dk);
+  color:var(--blue-lt);font-family:var(--sans);font-size:7.5px;font-weight:700;
+  display:inline-flex;align-items:center;justify-content:center;
+  cursor:help;flex-shrink:0;transition:all var(--ease);position:relative;
+}
+.ibar:hover{background:var(--blue-glow2);border-color:var(--blue-lt)}
+.ibar-tip{
+  display:none;position:fixed;z-index:9999;
+  background:var(--bg4);border:1px solid var(--bd2);
+  border-left:2px solid var(--blue-lt);
+  border-radius:0 var(--r) var(--r) 0;
+  padding:9px 11px;width:226px;
+  font-family:var(--sans);font-size:8.5px;line-height:1.65;
+  color:var(--t1);pointer-events:none;
+  box-shadow:0 12px 32px rgba(0,0,0,.65);
+}
+.ibar-tip strong{
+  display:block;font-size:9px;font-weight:600;
+  color:var(--t0);margin-bottom:4px;border-bottom:1px solid var(--bd);padding-bottom:3px;
+}
+.ibar-tip code{
+  font-family:var(--mono);font-size:8px;color:var(--blue-lt);
+  background:rgba(43,87,151,.2);padding:0 3px;border-radius:2px;
+}
+.ibar:hover .ibar-tip{display:block}
+
+/* ─────────────────────────────────────────────
+   MAIN CONTENT
+───────────────────────────────────────────── */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.tab-row{
+  background:var(--bg2);border-bottom:1px solid var(--bd);
+  display:flex;overflow-x:auto;flex-shrink:0;
+}
+.tab-row::-webkit-scrollbar{height:0}
+.tab{
+  padding:0 14px;height:35px;display:flex;align-items:center;gap:4px;
+  font-family:var(--sans);font-size:9.5px;font-weight:500;color:var(--t2);
+  cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;
+  transition:color var(--ease),background var(--ease);user-select:none;
+}
+.tab:hover{color:var(--t0);background:rgba(255,255,255,.02)}
+.tab.on{color:var(--t0);border-bottom-color:var(--blue-lt);background:var(--blue-glow)}
+.alert-pip{
+  width:5px;height:5px;border-radius:50%;background:var(--red-lt);
+  animation:pip 1.8s infinite;flex-shrink:0;
+}
+@keyframes pip{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* Content scroll area */
+.content{flex:1;overflow-y:auto;padding:12px 14px;background:var(--black)}
+
+/* ─────────────────────────────────────────────
+   FOOTER
+───────────────────────────────────────────── */
+.footer{
+  background:var(--bg1);border-top:1px solid var(--bd2);
+  height:34px;display:flex;align-items:center;justify-content:center;
+  gap:12px;flex-shrink:0;
+}
+.f-text{font-family:var(--mono);font-size:10px;color:var(--t2);letter-spacing:.5px}
+.f-text em{font-style:normal;color:var(--blue-lt);font-weight:600}
+.f-dot{width:3px;height:3px;border-radius:50%;background:var(--t3)}
+
+/* ─────────────────────────────────────────────
+   METRIC CARDS
+───────────────────────────────────────────── */
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}
+.g2{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.mc{
+  background:var(--bg1);border:1px solid var(--bd);
+  border-top:2px solid var(--bd);border-radius:var(--r);padding:8px 10px;
+}
+.mc.t-b{border-top-color:var(--blue-lt)}.mc.t-g{border-top-color:var(--green)}
+.mc.t-a{border-top-color:var(--amber)}.mc.t-r{border-top-color:var(--red-lt)}
+.mc.t-s{border-top-color:#546e7a}
+.mc-lbl{font-family:var(--sans);font-size:7.5px;font-weight:600;color:var(--t3);letter-spacing:.7px;text-transform:uppercase;margin-bottom:3px}
+.mc-val{font-family:var(--mono);font-size:18px;font-weight:600;line-height:1;color:var(--t0)}
+.mc-sub{font-family:var(--mono);font-size:8px;color:var(--t2);margin-top:2px}
+
+/* ─────────────────────────────────────────────
+   PANELS
+───────────────────────────────────────────── */
+.panel{background:var(--bg1);border:1px solid var(--bd);border-radius:var(--r);padding:10px 12px}
+.ph{
+  font-family:var(--sans);font-size:8.5px;font-weight:700;color:var(--t2);
+  letter-spacing:.7px;text-transform:uppercase;
+  border-bottom:1px solid var(--bd);padding-bottom:6px;margin-bottom:8px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.ph-r{font-family:var(--mono);font-size:8px;color:var(--blue-lt);font-weight:400}
+.stl{
+  font-family:var(--sans);font-size:7px;font-weight:700;color:var(--blue-lt);
+  letter-spacing:1.5px;text-transform:uppercase;
+  margin:8px 0 5px;padding-bottom:3px;border-bottom:1px solid var(--bd);
+}
+
+/* ─────────────────────────────────────────────
+   TABLES
+───────────────────────────────────────────── */
+.tbl{width:100%;border-collapse:collapse}
+.tbl th{
+  font-family:var(--sans);font-size:7.5px;font-weight:700;color:var(--t2);
+  padding:4px 7px;background:var(--bg3);border-bottom:1px solid var(--bd);
+  text-align:right;letter-spacing:.3px;text-transform:uppercase;
+}
+.tbl th.l{text-align:left}
+.tbl td{
+  font-family:var(--mono);font-size:9.5px;padding:4px 7px;
+  text-align:right;border-bottom:1px solid rgba(26,38,56,.5);color:var(--t0);
+}
+.tbl td.l{text-align:left;color:var(--t1);font-family:var(--sans);font-size:9.5px}
+.tbl tr:hover td{background:rgba(255,255,255,.01)}
+.tbl tr.tot td{border-top:2px solid var(--bd2);font-weight:600}
+
+/* ─────────────────────────────────────────────
+   ALERT BOXES
+───────────────────────────────────────────── */
+.al{border-left:3px solid;padding:7px 10px;border-radius:0 var(--r) var(--r) 0;margin-bottom:7px}
+.al-r{border-color:var(--red);background:var(--red-dim);color:var(--red-lt)}
+.al-a{border-color:var(--amber);background:var(--amber-dim);color:var(--amber)}
+.al-g{border-color:var(--green);background:var(--green-dim);color:var(--green-lt)}
+.al-b{border-color:var(--blue-lt);background:var(--blue-glow);color:#7eb3ff}
+.al strong{font-family:var(--sans);font-size:9.5px;font-weight:600;display:block;margin-bottom:2px}
+.al p{font-family:var(--mono);font-size:8.5px;color:var(--t1);line-height:1.5}
+
+/* ─────────────────────────────────────────────
+   MISC
+───────────────────────────────────────────── */
+.sep{border:none;border-top:1px solid var(--bd);margin:8px 0}
+.prog{height:6px;background:var(--bg4);border-radius:3px;overflow:hidden;margin-top:3px}
+.prog-fill{height:100%;border-radius:3px;transition:width .4s}
+.wf-row{display:flex;align-items:center;gap:7px;margin-bottom:3.5px}
+.wf-lbl{width:145px;font-family:var(--sans);font-size:8.5px;color:var(--t1);text-align:right;flex-shrink:0}
+.wf-lbl.b{color:var(--t0);font-weight:600}
+.wf-track{flex:1;height:12px;background:var(--bg3);border-radius:1px;overflow:hidden;position:relative}
+.wf-fill{height:100%;position:absolute;left:0;top:0;border-radius:1px}
+.wf-val{width:66px;font-family:var(--mono);font-size:9.5px;text-align:right;flex-shrink:0}
+.cb{height:16px;display:flex;border-radius:1px;overflow:hidden;margin-bottom:2px}
+.cs{display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:7.5px}
+.eps-row{display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid var(--bd)}
+
+/* ─────────────────────────────────────────────
+   STRATEGIC ADVISORY
+───────────────────────────────────────────── */
+.adv-intro{font-family:var(--sans);font-size:9px;color:var(--t2);line-height:1.6;margin-bottom:10px;padding:8px 12px;background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r)}
+.adv-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
+.adv-tile{
+  background:var(--bg1);border:1px solid var(--bd);border-radius:var(--r);
+  padding:9px 12px;display:flex;flex-direction:column;align-items:center;
+}
+.adv-tile-n{font-family:var(--mono);font-size:24px;font-weight:700;line-height:1}
+.adv-tile-l{font-family:var(--sans);font-size:7.5px;color:var(--t2);margin-top:3px;text-align:center;letter-spacing:.3px}
+.adv-card{
+  background:var(--bg1);border:1px solid var(--bd);border-radius:var(--r);
+  padding:16px 18px;margin-bottom:10px;position:relative;overflow:hidden;
+}
+.adv-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px}
+.adv-card.crit::before{background:var(--red)}
+.adv-card.warn::before{background:var(--amber)}
+.adv-card.ok::before{background:var(--green)}
+.adv-card.info::before{background:var(--blue-lt)}
+.adv-hdr{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px}
+.adv-title{font-family:var(--sans);font-size:12px;font-weight:700;color:var(--t0);line-height:1.35}
+.adv-sev{
+  padding:2px 9px;border-radius:var(--r);font-family:var(--mono);
+  font-size:8.5px;font-weight:700;letter-spacing:.5px;white-space:nowrap;flex-shrink:0;
+}
+.crit .adv-sev{background:var(--red-dim);color:var(--red-lt);border:1px solid rgba(211,47,47,.3)}
+.warn .adv-sev{background:var(--amber-dim);color:var(--amber);border:1px solid rgba(255,179,0,.28)}
+.ok   .adv-sev{background:var(--green-dim);color:var(--green-lt);border:1px solid rgba(76,175,80,.28)}
+.info .adv-sev{background:var(--blue-glow);color:#7eb3ff;border:1px solid rgba(43,87,151,.35)}
+.adv-diagnosis{
+  font-family:var(--sans);font-size:10px;color:var(--t1);line-height:1.75;
+  padding:10px 12px;background:var(--bg2);border:1px solid var(--bd);
+  border-radius:var(--r);margin-bottom:10px;
+}
+.adv-diagnosis strong{color:var(--t0);font-weight:600}
+.adv-diagnosis code{font-family:var(--mono);font-size:9px;color:var(--blue-lt);background:rgba(43,87,151,.18);padding:0 4px;border-radius:2px}
+.adv-metrics{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.adv-m{
+  background:var(--bg3);border:1px solid var(--bd);border-radius:var(--r);
+  padding:5px 9px;flex:1;min-width:80px;
+}
+.adv-m-lbl{font-family:var(--sans);font-size:7.5px;color:var(--t3);letter-spacing:.5px;text-transform:uppercase}
+.adv-m-val{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--t0);margin-top:2px}
+.adv-action{
+  padding:8px 11px;background:rgba(43,87,151,.08);
+  border:1px solid rgba(43,87,151,.22);border-radius:var(--r);
+}
+.adv-act-lbl{font-family:var(--sans);font-size:7.5px;font-weight:700;color:var(--blue-lt);letter-spacing:1px;text-transform:uppercase;margin-bottom:3px}
+.adv-act-text{font-family:var(--sans);font-size:9px;color:var(--t1);line-height:1.65}
+.adv-clear{
+  text-align:center;padding:48px 24px;
+  background:var(--bg1);border:1px solid var(--bd);border-radius:var(--r);
+}
+.adv-clear-icon{font-size:30px;margin-bottom:8px}
+.adv-clear-title{font-family:var(--sans);font-size:14px;font-weight:600;color:var(--green-lt);margin-bottom:6px}
+.adv-clear-sub{font-family:var(--mono);font-size:9px;color:var(--t2)}
+/* heatmap */
+.hm-cell{display:flex;align-items:center;justify-content:center;border-radius:1px;font-family:var(--mono);font-size:7.5px;font-weight:600;cursor:default;transition:transform .08s}
+.hm-cell:hover{transform:scale(1.07);z-index:5}
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   DECOUPLED STATE MODEL
+   - localInputs: what the user sees while typing (immediate)
+   - S: the committed engine state (only updates after debounce)
+════════════════════════════════════════════════════════════════= */
+const BASE = {
+  struct:'fixed', acqPrice:142.5, tgtPrice:44.32, dealVal:58.68, fixedER:0.412,
+  cap:155, floor:130, walkaway:120, stockPct:72, tgtPremium:32,
+  txn:4250, bookEq:1200, ppaT:21,
+  tm:320, tmL:15, tech:280, techL:7, cust:190, custL:10, ppe:110, ppeL:12, inv:35,
+  acqNI:850, acqSh:202.4, tgtNI:220, newSh:58.5,
+  syn:180, tax:21, debt:1200, intRate:5.5,
+  ati:980, nolBal:450, s382:85, debtLife:7, finFees:2.5,
+  tickFee:0.15, bridgeFee:0.5, bridgeAmt:500, regDelay:4,
+  ebitda:1480, grossDebt:3200, cash:420, intExp:176, sector:'tech',
+  aRev:5200, aEB:1200, aNI:850, tRev:1850, tEB:380, tNI:220, fairTh:5,
+  circ:false, cashEPS:false,
+};
+const PRESETS = {
+  base:{ label:'BASE CASE', ...BASE },
+  bull:{ label:'BULL CASE', ...BASE, syn:280, tgtNI:260, acqNI:920, ebitda:1650, tgtPremium:28, intRate:5.0,  regDelay:2 },
+  bear:{ label:'BEAR CASE', ...BASE, syn:80,  tgtNI:185, acqNI:780, ebitda:1280, tgtPremium:38, intRate:6.25, regDelay:8, debt:1400 },
+};
+let activeScenario = 'base';
+const saved = { base:null, bull:null, bear:null };
+
+// S = committed engine state (full recalc only after debounce)
+const S = { ...PRESETS.base, tab:'collar' };
+// localInputs mirrors user keystrokes — fast, no calc
+const localInputs = { ...S };
+
+/* debounce: 500ms after last keystroke */
+let _debTimer = null;
+function scheduleEngineSync() {
+  const ind = document.getElementById('debounce-ind');
+  if (ind) { ind.classList.add('visible'); }
+  clearTimeout(_debTimer);
+  _debTimer = setTimeout(() => {
+    Object.assign(S, localInputs);
+    refreshDashboard();          // targeted DOM update via RAF
+    if (ind) ind.classList.remove('visible');
+  }, 500);
+}
+
+/* immediate sync for toggles / selects (no typing) */
+function immediateSyncKey(k, v) {
+  localInputs[k] = v;
+  S[k] = v;
+  refreshDashboard();
+}
+
+function loadScenario(key) {
+  activeScenario = key;
+  const src = saved[key] || PRESETS[key]; if (!src) return;
+  Object.keys(BASE).forEach(k => { if (k in src) { S[k] = src[k]; localInputs[k] = src[k]; } });
+  buildShell();        // full rebuild only on scenario switch
+}
+function saveScenario(key) { saved[key] = { ...S }; setScenarioBtns(); }
+
+/* ═══════════════════════════════════════════════════════════════
+   FINANCIAL ENGINES
+════════════════════════════════════════════════════════════════= */
+function calcPPA() {
+  const{txn,bookEq,ppaT:t,tm,tmL,tech,techL,cust,custL,ppe,ppeL,inv}=S;
+  const wu=tm+tech+cust+ppe+inv, dtl=wu*(t/100), nia=bookEq+wu-dtl, gw=txn-nia;
+  const gaapDA=(tm/tmL)+(tech/techL)+(cust/custL)+(ppe/ppeL)+inv;
+  const nonCash=(tm/tmL)+(tech/techL)+(cust/custL);
+  return{wu,dtl,nia,gw,gaapDA,nonCash,items:[
+    {l:'Trademarks',    v:tm,  life:tmL,  da:tm/tmL,   nc:true },
+    {l:'Technology',    v:tech,life:techL,da:tech/techL,nc:true },
+    {l:'Cust. Lists',   v:cust,life:custL,da:cust/custL,nc:true },
+    {l:'PP&E Step-Up',  v:ppe, life:ppeL, da:ppe/ppeL, nc:false},
+    {l:'Inventory(1yr)',v:inv, life:1,    da:inv,       nc:false},
+  ]};
+}
+function calcEPS(ppa) {
+  const{acqNI,acqSh,tgtNI,newSh,syn,tax,debt,intRate,ati,nolBal,s382,debtLife,finFees,tickFee,bridgeFee,bridgeAmt,regDelay,circ}=S;
+  const baseEPS=acqNI/acqSh, pfSh=acqSh+newSh;
+  const capFees=debt*(finFees/100), feeAmort=capFees/debtLife;
+  const cap163j=ati*.3;
+  const tickAnnual=debt*(tickFee/100);
+  const tickY1=bridgeAmt*(bridgeFee/100)+tickAnnual*(regDelay/12);
+  const years=[.30,.70,1.00].map((ph,i)=>{
+    const avgDebt=circ?debt*(1-.04*i):debt;
+    const gi=avgDebt*(intRate/100);
+    const di=Math.min(gi,cap163j), ex=Math.max(0,gi-cap163j);
+    const nolU=Math.min(s382,Math.max(0,nolBal-i*s382));
+    const synAT=syn*ph*(1-tax/100);
+    const intAT=(di+ex)*(1-tax/100);
+    const daAT=ppa.gaapDA*(1-tax/100);
+    const feeAT=feeAmort*(1-tax/100);
+    const tckAT=(i===0?tickY1:tickAnnual)*(1-tax/100);
+    const nolB=nolU*(tax/100);
+    const pfNI=acqNI+tgtNI+synAT-intAT-daAT-feeAT-tckAT+nolB;
+    const pfEPS=pfNI/pfSh;
+    const cashAdj=ppa.nonCash*(1-tax/100)/pfSh;
+    return{yr:i+1,ph,synAT,intAT,daAT,feeAT,tckAT,nolB,nolU,pfNI,pfEPS,pfCash:pfEPS+cashAdj,
+      gaapAcc:((pfEPS/baseEPS)-1)*100, cashAcc:((pfEPS+cashAdj)/baseEPS-1)*100, avgDebt};
+  });
+  return{baseEPS,pfSh,years,cap163j,
+    deductInt:Math.min(S.debt*(S.intRate/100),cap163j),
+    excess:Math.max(0,S.debt*(S.intRate/100)-cap163j),
+    capFees,feeAmort,tickAnnual,tickY1};
+}
+function calcCredit() {
+  const TH={tech:{ig:2.5,cov:8,n:'Technology'},healthcare:{ig:3,cov:6.5,n:'Healthcare'},industrial:{ig:2.8,cov:5.5,n:'Industrials'},consumer:{ig:3.5,cov:5,n:'Consumer'},energy:{ig:2,cov:4.5,n:'Energy'}};
+  const t=TH[S.sector]||TH.tech;
+  const nd=S.grossDebt-S.cash, lev=nd/S.ebitda, cov=S.ebitda/S.intExp;
+  const isIG=lev<=t.ig&&cov>=t.cov, cushion=S.ebitda-(nd/t.ig);
+  let r='B';
+  if(lev<.5&&cov>20)r='AAA';else if(lev<1&&cov>15)r='AA';else if(lev<1.5&&cov>10)r='A';
+  else if(lev<2&&cov>8)r='A-';else if(lev<2.5&&cov>6)r='BBB+';else if(lev<3&&cov>5)r='BBB';
+  else if(lev<3.5&&cov>4)r='BBB-';else if(lev<4.5&&cov>3)r='BB+';else if(lev<5&&cov>2)r='BB';
+  return{lev,cov,nd,isIG,rating:r,t,TH,cushion,cushPct:(cushion/S.ebitda)*100};
+}
+function calcCollar() {
+  const{acqPrice:ap,cap,floor,walkaway,dealVal,fixedER,struct,tgtPrice:tp}=S;
+  let er,offer;
+  if(struct==='fixed'){er=fixedER;offer=er*ap;}
+  else{const eff=Math.max(floor,Math.min(cap,ap));er=dealVal/eff;offer=er*ap;}
+  let status='IN RANGE';
+  if(ap>=cap)status='AT CAP'; if(ap<=floor)status='AT FLOOR'; if(ap<=walkaway)status='WALK-AWAY';
+  const offerFloor=struct==='fixed'?fixedER*floor:dealVal;
+  const offerCap=struct==='fixed'?fixedER*cap:dealVal;
+  const varDlr=offer-offerFloor;
+  return{er,offer,status,prem:((offer/tp)-1)*100,offerFloor,offerCap,varDlr,varPct:offer>0?(varDlr/offer)*100:0};
+}
+function calcCont() {
+  const pfSh=S.acqSh+S.newSh, tgtOwn=(S.newSh/pfSh)*100, acqOwn=(S.acqSh/pfSh)*100;
+  const gaps=[
+    {nm:'Revenue',   tC:(S.tRev/(S.aRev+S.tRev))*100},
+    {nm:'EBITDA',    tC:(S.tEB /(S.aEB +S.tEB ))*100},
+    {nm:'Net Income',tC:(S.tNI /(S.aNI +S.tNI ))*100},
+  ].map(g=>({...g,gap:tgtOwn-g.tC,flag:Math.abs(tgtOwn-g.tC)>S.fairTh}));
+  const ebitdaC=(S.tEB/(S.aEB+S.tEB))*100;
+  return{tgtOwn,acqOwn,gaps,flagged:gaps.some(g=>g.flag),actFlag:S.tgtPremium-ebitdaC>20,ebitdaC};
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   HELPERS
+════════════════════════════════════════════════════════════════= */
+const fv =(n,d=0)=>'$'+Math.abs(+n).toFixed(d)+'M';
+const fx =(n,d=2)=>(+n).toFixed(d)+'x';
+const fp =(n,d=1)=>(n>=0?'+':'')+n.toFixed(d)+'%';
+const fe =(n,d=2)=>'$'+(+n).toFixed(d);
+const cc =v=>v>=0?'var(--green-lt)':'var(--red-lt)';
+const clp=(v,a,b)=>Math.max(a,Math.min(b,v));
+function bdg(txt,t){
+  const M={r:['var(--red-lt)','var(--red-dim)','rgba(211,47,47,.3)'],g:['var(--green-lt)','var(--green-dim)','rgba(76,175,80,.3)'],a:['var(--amber)','var(--amber-dim)','rgba(255,179,0,.28)'],b:['#7eb3ff','var(--blue-glow)','rgba(43,87,151,.4)'],s:['var(--t2)','rgba(207,216,220,.05)','rgba(207,216,220,.14)']};
+  const[c,bg,bd]=M[t]||M.s;
+  return`<span style="display:inline-flex;align-items:center;padding:1.5px 5px;border-radius:2px;font-family:var(--mono);font-size:8px;font-weight:600;color:${c};background:${bg};border:1px solid ${bd}">${txt}</span>`;
+}
+function mc(lbl,val,hi,sub){return`<div class="mc t-${hi}"><div class="mc-lbl">${lbl}</div><div class="mc-val">${val}</div>${sub?`<div class="mc-sub">${sub}</div>`:''}</div>`}
+
+/* i-bar tooltip builder */
+function ibar(content){
+  return`<span class="ibar">i<span class="ibar-tip">${content}</span></span>`;
+}
+const TIPS={
+  debtLife:`<strong>Debt Tenor (yrs)</strong>Defines the duration of the credit facility. Impacts the annual non-cash tax shield by determining the amortization period for capitalized financing fees (<code>${BASE.finFees}% of debt raised</code>). A longer tenor reduces annual amortization drag on EPS but delays full fee recognition.`,
+  ati:`<strong>§163(j) ATI ($M)</strong>Adjusted Taxable Income (ATI) determines the interest deductibility floor. Under current IRS code, net interest expense is capped at <code>30% of ATI</code>. Excess interest is disallowed in the current period and carried forward to future years.`,
+  nolBal:`<strong>Target NOL ($M)</strong>Net Operating Losses (NOLs) available to the acquirer post-close. Serves as a significant non-cash asset by offsetting future taxable income, subject to strict annual §382 limitations following the change of control.`,
+  s382:`<strong>§382 Annual Limit ($M/yr)</strong>The mandated annual cap on utilizing the Target's NOLs post-acquisition. Calculated as the <code>Target Equity Value × Federal Long-term Tax-Exempt Rate</code> (typically 3–5%). Unused annual limits are permanently lost.`,
+};
+
+/* sidebar input — writes to localInputs only, schedules debounce */
+function sinp(lbl, k, tipKey) {
+  const tip = tipKey ? ibar(TIPS[tipKey]) : '';
+  return `<div class="irow"><span class="ilbl"><span>${lbl}</span>${tip}</span>
+    <input class="sb-input" type="number" step="any" id="si-${k}" value="${localInputs[k]}"
+      oninput="localInputs['${k}']=+this.value;scheduleEngineSync()"></div>`;
+}
+function ssel(lbl, k, opts) {
+  return `<div class="irow"><span class="ilbl">${lbl}</span>
+    <select class="sb-input" id="ss-${k}" onchange="immediateSyncKey('${k}',this.value)">${opts.map(([v,l])=>`<option value="${v}" ${S[k]===v?'selected':''}>${l}</option>`).join('')}</select></div>`;
+}
+function stog(lbl, k) {
+  return `<div class="tg-row"><span class="tg-lbl">${lbl}</span>
+    <label class="tg"><input type="checkbox" id="st-${k}" ${S[k]?'checked':''} onchange="immediateSyncKey('${k}',this.checked)"><span class="tg-sl"></span></label></div>`;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SVGs
+════════════════════════════════════════════════════════════════= */
+function collarSVG(col) {
+  const W=490,H=185,PL=50,PR=16,PT=14,PB=28,cw=W-PL-PR,ch=H-PT-PB,xMin=80,xMax=200;
+  const pts=[]; for(let p=xMin;p<=xMax;p+=2){const o=S.struct==='fixed'?S.fixedER*p:(S.dealVal/clp(p,S.floor,S.cap))*p;pts.push({x:p,y:o});}
+  const ys=pts.map(p=>p.y),yMin=Math.min(...ys)*.91,yMax=Math.max(...ys)*1.06;
+  const sx=v=>PL+((v-xMin)/(xMax-xMin))*cw, sy=v=>PT+ch-((v-yMin)/(yMax-yMin))*ch;
+  const path=pts.map((p,i)=>`${i?'L':'M'}${sx(p.x).toFixed(1)},${sy(p.y).toFixed(1)}`).join(' ');
+  const curO=S.struct==='fixed'?S.fixedER*S.acqPrice:(S.dealVal/clp(S.acqPrice,S.floor,S.cap))*S.acqPrice;
+  const cx=sx(clp(S.acqPrice,xMin,xMax)),cy=sy(clp(curO,yMin,yMax));
+  const vPts=pts.filter(p=>p.x>=S.floor&&p.x<=S.acqPrice&&p.x>=xMin);
+  const vPath=vPts.length>1?`M${sx(Math.max(S.floor,xMin)).toFixed(1)},${(PT+ch).toFixed(1)} `+vPts.map(p=>`L${sx(p.x).toFixed(1)},${sy(p.y).toFixed(1)}`).join(' ')+` L${cx.toFixed(1)},${(PT+ch).toFixed(1)} Z`:'';
+  const nY=4,yr=(yMax-yMin)/nY;
+  const xts=[90,110,130,150,170,190];
+  const grid=xts.map(v=>`<line x1="${sx(v)}" y1="${PT}" x2="${sx(v)}" y2="${PT+ch}" stroke="#1a2638" stroke-width=".5"/><text x="${sx(v)}" y="${PT+ch+14}" fill="#3e5260" font-size="7.5" text-anchor="middle" font-family="Inter,sans-serif">$${v}</text>`).join('');
+  const yAxis=Array.from({length:nY+1},(_,i)=>yMin+i*yr).map(v=>`<line x1="${PL}" y1="${sy(v)}" x2="${PL+cw}" y2="${sy(v)}" stroke="#111820" stroke-width=".4"/><text x="${PL-4}" y="${(sy(v)+3).toFixed(0)}" fill="#3e5260" font-size="7.5" text-anchor="end" font-family="Inter,sans-serif">$${v.toFixed(0)}</text>`).join('');
+  const capL=S.cap>=xMin&&S.cap<=xMax?`<line x1="${sx(S.cap)}" y1="${PT}" x2="${sx(S.cap)}" y2="${PT+ch}" stroke="#ffb300" stroke-width="1" stroke-dasharray="4,3"/><text x="${(sx(S.cap)+2).toFixed(0)}" y="${PT+9}" fill="#ffb300" font-size="7.5" font-family="Inter,sans-serif">CAP $${S.cap}</text>`:'';
+  const flrL=S.floor>=xMin?`<line x1="${sx(S.floor)}" y1="${PT}" x2="${sx(S.floor)}" y2="${PT+ch}" stroke="#78909c" stroke-width="1" stroke-dasharray="4,3"/><text x="${(sx(S.floor)+2).toFixed(0)}" y="${PT+9}" fill="#78909c" font-size="7.5" font-family="Inter,sans-serif">FLR $${S.floor}</text>`:'';
+  const waL=S.walkaway>=xMin?`<line x1="${sx(S.walkaway)}" y1="${PT}" x2="${sx(S.walkaway)}" y2="${PT+ch}" stroke="#d32f2f" stroke-width="1" stroke-dasharray="3,2"/><text x="${(sx(S.walkaway)+2).toFixed(0)}" y="${(PT+ch-4).toFixed(0)}" fill="#d32f2f" font-size="7" font-family="Inter,sans-serif">W/A</text>`:'';
+  return `<svg width="100%" viewBox="0 0 ${W} ${H}" font-family="IBM Plex Mono,monospace">${grid}${yAxis}${vPath?`<path d="${vPath}" fill="rgba(211,47,47,.12)"/>`:''}${capL}${flrL}${waL}<path d="${path}" fill="none" stroke="${col.status==='WALK-AWAY'?'#d32f2f':'#3d6fc7'}" stroke-width="1.8"/><circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="4.5" fill="#000" stroke="#4caf50" stroke-width="2"/><text x="${(cx+7).toFixed(0)}" y="${(cy-4).toFixed(0)}" fill="#66bb6a" font-size="9">$${curO.toFixed(1)}</text><text x="${(PL+cw/2).toFixed(0)}" y="${H-1}" fill="#3e5260" font-size="7.5" text-anchor="middle" font-family="Inter,sans-serif">Acquirer Share Price ($)</text></svg>`;
+}
+function footballSVG() {
+  const tP=S.tgtPrice, offer=tP*(1+S.tgtPremium/100);
+  const W=490,H=222,PL=116,PR=14,PT=16,PB=22,cw=W-PL-PR,ch=H-PT-PB;
+  const ranges=[
+    {l:'52-Week Trading Range',     lo:tP*.72,  hi:tP*1.12, c:'#3d6fc7'},
+    {l:'Public Comps (EV/EBITDA)',  lo:tP*.82,  hi:tP*1.32, c:'#546e7a'},
+    {l:'Precedent Transactions',    lo:tP*1.08, hi:tP*1.58, c:'#ffb300'},
+    {l:'DCF (WACC 8–12%)',          lo:tP*.88,  hi:tP*1.48, c:'#7986cb'},
+    {l:'LBO Floor (20% IRR)',       lo:tP*.92,  hi:tP*1.22, c:'#ff7043'},
+    {l:'Analyst Price Targets',     lo:tP*1.0,  hi:tP*1.38, c:'#4db6ac'},
+  ];
+  const allV=[...ranges.flatMap(r=>[r.lo,r.hi]),offer];
+  const xMin=Math.min(...allV)*.90, xMax=Math.max(...allV)*1.05;
+  const sx=v=>PL+((v-xMin)/(xMax-xMin))*cw;
+  const bH=20,bG=7,tot=ranges.length*(bH+bG),sY=PT+(ch-tot)/2;
+  const nTk=5, step=(xMax-xMin)/nTk;
+  const grid=Array.from({length:nTk+1},(_,i)=>xMin+i*step).map(v=>`<line x1="${sx(v).toFixed(1)}" y1="${PT}" x2="${sx(v).toFixed(1)}" y2="${PT+ch}" stroke="#1a2638" stroke-width=".5"/><text x="${sx(v).toFixed(1)}" y="${H-4}" fill="#3e5260" font-size="7.5" text-anchor="middle" font-family="Inter,sans-serif">$${v.toFixed(0)}</text>`).join('');
+  const bars=ranges.map((r,i)=>{const y=sY+i*(bH+bG);return`<text x="${PL-3}" y="${(y+bH/2+3.5).toFixed(0)}" fill="#6b8494" font-size="8.5" text-anchor="end" font-family="Inter,sans-serif">${r.l}</text><rect x="${sx(r.lo).toFixed(1)}" y="${y}" width="${(sx(r.hi)-sx(r.lo)).toFixed(1)}" height="${bH}" fill="${r.c}22" stroke="${r.c}" stroke-width=".8" rx="1"/><text x="${(sx(r.lo)-2).toFixed(1)}" y="${(y+bH/2+3.5).toFixed(0)}" fill="${r.c}99" font-size="7.5" text-anchor="end">$${r.lo.toFixed(0)}</text><text x="${(sx(r.hi)+2).toFixed(1)}" y="${(y+bH/2+3.5).toFixed(0)}" fill="${r.c}99" font-size="7.5">$${r.hi.toFixed(0)}</text>`;}).join('');
+  const ox=sx(offer).toFixed(1);
+  return`<svg width="100%" viewBox="0 0 ${W} ${H}" font-family="IBM Plex Mono,monospace">${grid}${bars}<line x1="${ox}" y1="${PT-8}" x2="${ox}" y2="${PT+ch+4}" stroke="#4caf50" stroke-width="2"/><polygon points="${parseFloat(ox)-6},${PT-17} ${parseFloat(ox)+6},${PT-17} ${ox},${PT-8}" fill="#4caf50"/><text x="${ox}" y="${PT-19}" fill="#66bb6a" font-size="8.5" text-anchor="middle" font-weight="600" font-family="Inter,sans-serif">OFFER $${offer.toFixed(2)}</text></svg>`;
+}
+function activistHeatmap(cont) {
+  const prems=[10,15,20,25,30,35,40,45,50], ebs=[10,15,20,25,30,35,40];
+  const cellBg=gap=>{if(gap>20)return['#3d0000','#ef9a9a'];if(gap>10)return['#4a2000','#ffb300'];if(gap>S.fairTh)return['#2a2800','#ffe082'];return['#0a160a','#4caf50'];};
+  let h=`<div style="overflow-x:auto"><div style="display:inline-block;min-width:420px">`;
+  h+=`<div style="display:flex;gap:2px;margin-bottom:2px"><div style="width:52px;font-family:var(--sans);font-size:7px;color:var(--t3);text-align:center;padding-top:8px">Prem%→<br>EB%↓</div>`;
+  prems.forEach(p=>h+=`<div style="width:40px;text-align:center;font-family:var(--sans);font-size:7.5px;color:var(--t2)">${p}%</div>`);
+  h+=`</div>`;
+  ebs.forEach(eb=>{
+    h+=`<div style="display:flex;gap:2px;margin-bottom:2px"><div style="width:52px;font-family:var(--sans);font-size:7.5px;color:var(--t1);text-align:right;padding-right:6px;display:flex;align-items:center;justify-content:flex-end">${eb}%</div>`;
+    prems.forEach(p=>{const gap=p-eb,[bg,fc]=cellBg(gap);h+=`<div class="hm-cell" style="width:40px;height:24px;background:${bg};color:${fc};border:1px solid ${gap>S.fairTh?'rgba(211,47,47,.2)':'transparent'}" title="Gap: ${gap>=0?'+':''}${gap}%">${gap>=0?'+':''}${gap}</div>`;});
+    h+=`</div>`;
+  });
+  const cg=S.tgtPremium-cont.ebitdaC;
+  h+=`<div style="margin-top:8px;font-family:var(--sans);font-size:8.5px;color:var(--t1)">Current: Premium <b>${S.tgtPremium.toFixed(1)}%</b> vs EBITDA <b>${cont.ebitdaC.toFixed(1)}%</b> → <span style="font-family:var(--mono);color:${cg>S.fairTh?'var(--red-lt)':'var(--green-lt)'};font-weight:600">Gap: ${cg>=0?'+':''}${cg.toFixed(1)}%</span> ${cg>S.fairTh?`<span class="ab ab-r" style="margin-left:5px">ACTIVIST RISK</span>`:`<span class="ab ab-g" style="margin-left:5px">CLEAR</span>`}</div>`;
+  h+=`</div></div>`;return h;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   STRATEGIC ADVISORY ENGINE
+════════════════════════════════════════════════════════════════= */
+function buildAdvisory(ppa, eps, cr, col, cont, ny) {
+  const cards = [];
+
+  if (ny) {
+    const ratio = (S.newSh/S.acqSh)*100;
+    cards.push({
+      sev:'crit', title:'NYSE/NASDAQ 20% Share Issuance Rule Triggered',
+      diagnosis:`The issuance of <strong>${S.newSh.toFixed(1)}M new shares (${ratio.toFixed(1)}% of existing)</strong> triggers a mandatory shareholder vote per <code>NYSE Rule 312.03</code>. This introduces significant execution risk, as proxy advisors (ISS/Glass Lewis) may <strong>recommend a vote against</strong> the deal if synergies appear speculative relative to the control premium paid. Required shareholder meetings add 60–90 days to timeline, extending ticking fee exposure by an estimated <code>$${(S.debt*(S.tickFee/100)*(75/365)).toFixed(1)}M</code> in additional friction costs.`,
+      metrics:[{l:'New Shares',v:`${S.newSh.toFixed(1)}M`},{l:'% of Existing',v:`${ratio.toFixed(1)}%`},{l:'Threshold',v:'20.0%'},{l:'Excess',v:`+${(ratio-20).toFixed(1)}%`}],
+      action:`Substitute share consideration with cash or bridge debt to bring share issuance below 20%. Alternatively, restructure as a two-step merger to defer the shareholder vote requirement.`,
+    });
+  }
+
+  if (col.status === 'WALK-AWAY') {
+    cards.push({
+      sev:'crit', title:'Walk-Away Threshold Breached — Termination Risk Active',
+      diagnosis:`The Acquirer's stock price of <strong>$${S.acqPrice.toFixed(2)}</strong> has breached the contractual walk-away threshold of <strong>$${S.walkaway.toFixed(2)}</strong>. This grants the Target the <strong>unilateral legal right to terminate the Merger Agreement without penalty</strong>. The Target Board has a fiduciary obligation to consider this option. The typical outcomes are a <strong>renegotiation of the exchange ratio</strong> (reducing the ER to restore target value) or a <code>"cash top-off"</code> payment to make target shareholders whole — adding cash pressure of approximately <code>$${(col.varDlr * S.newSh).toFixed(0)}M</code> to save the deal at current price levels.`,
+      metrics:[{l:'Acq. Price',v:`$${S.acqPrice.toFixed(2)}`},{l:'Walk-Away',v:`$${S.walkaway.toFixed(2)}`},{l:'VaR/Share',v:`$${col.varDlr.toFixed(2)}`},{l:'Est. Cash Top-Off',v:`$${(col.varDlr*S.newSh).toFixed(0)}M`}],
+      action:`Immediately engage Acquirer Board to evaluate a cash top-off or revised exchange ratio. Prepare a revised fairness opinion for updated deal economics.`,
+    });
+  }
+
+  if (eps.years[0].gaapAcc < 0) {
+    const dil = Math.abs(eps.years[0].gaapAcc), severe = dil > 5;
+    cards.push({
+      sev: severe ? 'crit' : 'warn',
+      title: `Year 1 EPS Dilution: ${fp(eps.years[0].gaapAcc)} GAAP — Board Narrative Required`,
+      diagnosis:`A ${severe?'double-digit':'meaningful'} Y1 GAAP dilution of <strong>${fp(eps.years[0].gaapAcc)}</strong> is a primary driver of post-announcement <strong>Acquirer share price "leakage."</strong> Institutional investors typically penalise Acquirer stock by 1–3× the dilution percentage in the days post-announcement. The Board must proactively <strong>lead with the Cash EPS accretion story</strong> (Year 1 Cash: <code>${fp(eps.years[0].cashAcc)}</code>) and the full-synergy Year 3 GAAP profile (<code>${fp(eps.years[2].gaapAcc)}</code>) to maintain institutional support. Dilution drivers: interest <code>-$${eps.years[0].intAT.toFixed(0)}M</code>, PPA D&A <code>-$${eps.years[0].daAT.toFixed(0)}M</code>, fees <code>-$${(eps.years[0].feeAT+eps.years[0].tckAT).toFixed(0)}M</code>, partially offset by synergies <code>+$${eps.years[0].synAT.toFixed(0)}M</code>.`,
+      metrics:[{l:'Base EPS',v:fe(eps.baseEPS)},{l:'Y1 GAAP EPS',v:fe(eps.years[0].pfEPS)},{l:'Y1 Cash EPS',v:fe(eps.years[0].pfCash)},{l:'Y3 GAAP EPS',v:fe(eps.years[2].pfEPS)}],
+      action:`Lead investor communication with Cash EPS (${fp(eps.years[0].cashAcc)}) and Year 3 full-synergy EPS (${fp(eps.years[2].gaapAcc)}). Publish a detailed synergy white-paper. Consider scheduling a dedicated equity story investor day within 30 days of announcement.`,
+    });
+  }
+
+  if (!cr.isIG) {
+    cards.push({
+      sev:'warn', title:'Pro-Forma Credit Profile Below Investment Grade Threshold',
+      diagnosis:`The combined entity carries <strong>${fx(cr.lev)} Net Debt/EBITDA</strong>, exceeding the S&P IG threshold of <strong>${cr.t.ig}x</strong> for the ${cr.t.n} sector. Implied rating: <code>${cr.rating}</code>. Investment grade debt typically prices <strong>100–200bps tighter</strong> than high yield — a downgrade could increase annual interest cost by <code>$${(S.grossDebt*0.015).toFixed(0)}M–$${(S.grossDebt*0.02).toFixed(0)}M</code>. EBITDA cushion to IG: <code>${cr.cushion>0?'$'+cr.cushion.toFixed(0)+'M':'NONE — ALREADY BREACHED'}</code>.`,
+      metrics:[{l:'Net Lev.',v:fx(cr.lev)},{l:'IG Threshold',v:cr.t.ig+'x'},{l:'Rating',v:cr.rating},{l:'EBITDA Cushion',v:cr.cushion>0?'$'+cr.cushion.toFixed(0)+'M':'NONE'}],
+      action:`Accelerate post-close deleveraging. Target reaching ${cr.t.ig}x leverage within 18 months through EBITDA growth and targeted asset disposals. No incremental acquisitions until IG is restored.`,
+    });
+  }
+
+  if (cont.actFlag) {
+    const gap=S.tgtPremium-cont.ebitdaC;
+    cards.push({
+      sev:'warn', title:'Activist Investor Vulnerability — Premium/Contribution Gap',
+      diagnosis:`Premium paid (<strong>${S.tgtPremium.toFixed(1)}%</strong>) materially exceeds EBITDA contribution (<strong>${cont.ebitdaC.toFixed(1)}%</strong>) — a gap of <strong>+${gap.toFixed(1)} percentage points</strong>. This is a primary activist playbook trigger: firms such as Elliott Management and Starboard Value routinely accumulate Acquirer stock post-announcement when this gap exceeds 20 points, arguing the Board overpaid. The fairness gap also creates ISS vulnerability when seeking the NYSE 20% shareholder vote.`,
+      metrics:[{l:'Premium Paid',v:fp(S.tgtPremium)},{l:'EBITDA Contrib.',v:fp(cont.ebitdaC)},{l:'Gap',v:'+'+gap.toFixed(1)+'pt'},{l:'Alert Trigger',v:'>20pt'}],
+      action:`Commission an independent synergy verification. Engage top-20 institutional holders pre-announcement. Prepare a detailed strategic rationale document going beyond EPS arithmetic to justify the premium.`,
+    });
+  }
+
+  if (cards.length === 0) {
+    return `<div class="adv-clear"><div class="adv-clear-icon">✓</div><div class="adv-clear-title">No Active Deal-Breaker Alerts</div><div class="adv-clear-sub">All structural, governance, and credit thresholds within acceptable parameters</div></div>`;
+  }
+
+  const crit=cards.filter(c=>c.sev==='crit').length, warn=cards.filter(c=>c.sev==='warn').length;
+  const summary=`<div class="adv-summary">
+    ${[[crit,'CRITICAL','var(--red-lt)','var(--red-dim)'],[warn,'WARNINGS','var(--amber)','var(--amber-dim)'],[cards.length,'TOTAL ALERTS','var(--t0)','var(--bg2)'],[Math.max(0,5-cards.length),'CLEAR CHECKS','var(--green-lt)','var(--green-dim)']].map(([n,l,c,bg])=>
+      `<div class="adv-tile" style="background:${bg};border-color:${c}22"><div class="adv-tile-n" style="color:${c}">${n}</div><div class="adv-tile-l">${l}</div></div>`
+    ).join('')}
+  </div>`;
+
+  return summary + cards.map(a=>`
+    <div class="adv-card ${a.sev}">
+      <div class="adv-hdr">
+        <div class="adv-title">${a.title}</div>
+        <div class="adv-sev">${a.sev==='crit'?'CRITICAL':'WARNING'}</div>
+      </div>
+      <div class="adv-diagnosis">${a.diagnosis}</div>
+      <div class="adv-metrics">${a.metrics.map(m=>`<div class="adv-m"><div class="adv-m-lbl">${m.l}</div><div class="adv-m-val">${m.v}</div></div>`).join('')}</div>
+      <div class="adv-action"><div class="adv-act-lbl">Recommended Action</div><div class="adv-act-text">${a.action}</div></div>
+    </div>`
+  ).join('');
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SIDEBAR HTML (stable — only rebuilt on scenario switch)
+════════════════════════════════════════════════════════════════= */
+function buildSidebar() {
+  return `<div class="sb-hd">Assumptions <span style="font-family:var(--mono);font-size:7.5px;color:var(--blue-lt)">${new Date().toISOString().slice(0,10)}</span></div>
+  <div class="sb-scroll">
+    <div class="grp-hd">Deal Structure</div>
+    ${ssel('Structure','struct',[['fixed','Fixed Exchange Ratio'],['floating','Floating (Fixed Value)']])}
+    ${sinp('Acquirer Share Price ($)','acqPrice')}${sinp('Target Share Price ($)','tgtPrice')}
+    ${sinp('Deal Value / Offer ($)','dealVal')}${sinp('Fixed ER','fixedER')}
+    ${sinp('Stock Consideration (%)','stockPct')}${sinp('Acquisition Premium (%)','tgtPremium')}
+    <div class="grp-hd">Collar</div>
+    ${sinp('Cap Price ($)','cap')}${sinp('Floor Price ($)','floor')}${sinp('Walk-Away ($)','walkaway')}
+    <div class="grp-hd">Standalone Financials</div>
+    ${sinp('Acquirer Net Income ($M)','acqNI')}${sinp('Acquirer Shares (M)','acqSh')}
+    ${sinp('Target Net Income ($M)','tgtNI')}${sinp('New Shares Issued (M)','newSh')}
+    ${sinp('Run-Rate Synergies ($M)','syn')}${sinp('Tax Rate (%)','tax')}
+    <div class="grp-hd">Debt & Capital Markets</div>
+    ${sinp('New Debt ($M)','debt')}${sinp('Interest Rate (%)','intRate')}
+    ${sinp('Financing Fees (%)','finFees')}
+    ${sinp('Debt Tenor (yrs)','debtLife','debtLife')}
+    ${sinp('Ticking Fee (% p.a.)','tickFee')}${sinp('Bridge Commit. Fee (%)','bridgeFee')}
+    ${sinp('Bridge Loan ($M)','bridgeAmt')}${sinp('Regulatory Delay (months)','regDelay')}
+    ${sinp('§163(j) ATI ($M)','ati','ati')}
+    ${sinp('Target NOL ($M)','nolBal','nolBal')}
+    ${sinp('§382 Annual Limit ($M/yr)','s382','s382')}
+    <div class="grp-hd">PPA Parameters</div>
+    ${sinp('Transaction Value ($M)','txn')}${sinp('Book Equity ($M)','bookEq')}${sinp('PPA Tax Rate (%)','ppaT')}
+    ${sinp('Trademarks ($M)','tm')}${sinp('  Life (yrs)','tmL')}
+    ${sinp('Technology ($M)','tech')}${sinp('  Life (yrs)','techL')}
+    ${sinp('Customer Lists ($M)','cust')}${sinp('  Life (yrs)','custL')}
+    ${sinp('PP&E Write-Up ($M)','ppe')}${sinp('  Life (yrs)','ppeL')}
+    ${sinp('Inventory ($M)','inv')}
+    <div class="grp-hd">Credit</div>
+    ${ssel('Sector','sector',[['tech','Technology'],['healthcare','Healthcare'],['industrial','Industrials'],['consumer','Consumer'],['energy','Energy']])}
+    ${sinp('Pro-Forma EBITDA ($M)','ebitda')}${sinp('Gross Debt ($M)','grossDebt')}
+    ${sinp('Cash ($M)','cash')}${sinp('Interest Expense ($M)','intExp')}
+    <div class="grp-hd">Contribution</div>
+    ${sinp('Acq. Revenue ($M)','aRev')}${sinp('Tgt. Revenue ($M)','tRev')}
+    ${sinp('Acq. EBITDA ($M)','aEB')}${sinp('Tgt. EBITDA ($M)','tEB')}
+    ${sinp('Acq. Net Income ($M)','aNI')}${sinp('Tgt. Net Income ($M)','tNI')}
+    ${sinp('Fairness Threshold (%)','fairTh')}
+    <div class="grp-hd">Engine Toggles</div>
+    ${stog('Circularity (Avg Debt Balance)','circ')}
+    ${stog('Show Cash EPS Add-Back','cashEPS')}
+  </div>`;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TAB CONTENT BUILDERS
+════════════════════════════════════════════════════════════════= */
+function buildTabContent(ppa, eps, cr, col, cont, ny) {
+  if (S.tab === 'collar') {
+    return `<div class="g4">
+      ${mc('Exchange Ratio',col.er.toFixed(4)+'x','b',S.struct.toUpperCase())}
+      ${mc('Implied Offer Price',fe(col.offer),'s','vs $'+S.tgtPrice.toFixed(2)+' current')}
+      ${mc('Premium to Market',fp(col.prem),'a','')}
+      ${mc('Collar Status',col.status,col.status==='IN RANGE'?'g':col.status==='WALK-AWAY'?'r':'a','')}
+    </div>
+    <div class="g2">
+      <div class="panel">
+        <div class="ph">Offer Value Path — VaR Shaded <span class="ph-r">RED ZONE = VALUE AT RISK</span></div>
+        ${collarSVG(col)}
+        <div style="display:flex;gap:12px;margin-top:6px;flex-wrap:wrap">
+          ${[['#3d6fc7','Offer Path'],['#ffb300','Cap'],['#78909c','Floor'],['#d32f2f','Walk-Away'],['#4caf50','Current'],['rgba(211,47,47,.35)','VaR Zone']].map(([c,l])=>`<span style="display:flex;align-items:center;gap:3px;font-family:var(--sans);font-size:7.5px;color:var(--t2)"><span style="width:${l==='VaR Zone'?13:10}px;height:${l==='VaR Zone'?7:2}px;background:${c};display:inline-block;border-radius:1px"></span>${l}</span>`).join('')}
+        </div>
+        <hr class="sep">
+        <div class="al ${col.varDlr>8?'al-r':'al-b'}">
+          <strong>VaR IF ACQUIRER DROPS TO FLOOR $${S.floor}: -$${col.varDlr.toFixed(2)}/share (${col.varPct.toFixed(1)}%)</strong>
+          <p>Offer at floor: $${col.offerFloor.toFixed(2)} | Current offer: $${col.offer.toFixed(2)} | Total VaR on ${S.newSh.toFixed(1)}M shares: -$${(col.varDlr*S.newSh).toFixed(0)}M</p>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="ph">Collar Analytics <span class="ph-r">LIVE</span></div>
+        <table class="tbl"><thead><tr><th class="l">Parameter</th><th>Value</th><th>Active?</th></tr></thead><tbody>
+          ${[['Cap Price','$'+S.cap.toFixed(2),S.acqPrice>=S.cap,'a'],['Floor Price','$'+S.floor.toFixed(2),S.acqPrice<=S.floor,'a'],['Walk-Away','$'+S.walkaway.toFixed(2),S.acqPrice<=S.walkaway,'r'],['Effective ER',col.er.toFixed(4)+'x',false,'s'],['Offer @ Floor','$'+col.offerFloor.toFixed(2),false,'s'],['Offer @ Cap','$'+col.offerCap.toFixed(2),false,'s']].map(([l,v,act,t])=>`<tr${act?` style="background:rgba(${t==='r'?'211,47,47':'255,179,0'},.04)"`:''}>  <td class="l">${l}</td><td>${v}</td><td>${bdg(act?'ACTIVE':'—',act?t:'s')}</td></tr>`).join('')}
+        </tbody></table>
+        <div class="stl">NYSE 20% Rule</div>
+        <div class="al ${ny?'al-r':'al-g'}"><strong>${ny?'⚠ SHAREHOLDER VOTE REQUIRED':'✓ BELOW 20% THRESHOLD'}</strong><p>New shares: ${((S.newSh/S.acqSh)*100).toFixed(1)}% of existing ${S.acqSh.toFixed(1)}M</p></div>
+        <div class="stl">§368 COI Test</div>
+        <div class="al ${S.stockPct>=40?'al-g':'al-r'}"><strong>${S.stockPct>=40?'✓ TAX-FREE REORG':'✗ COI FAILURE — TAXABLE'}</strong><p>Stock consideration: ${S.stockPct}% (40% minimum required)</p></div>
+      </div>
+    </div>`;
+  }
+
+  if (S.tab === 'ppa') {
+    return `<div class="g4">
+      ${mc('Transaction Value',fv(S.txn),'b','')}${mc('Net Ident. Assets',fv(ppa.nia),'s','')}
+      ${mc('Goodwill',fv(ppa.gw),'a','Residual')}${mc('DTL Created','-'+fv(ppa.dtl),'r','@ '+S.ppaT+'%')}
+    </div>
+    <div class="g2">
+      <div class="panel">
+        <div class="ph">PPA Waterfall <span class="ph-r">ASC 805</span></div>
+        ${[['Purchase Price',S.txn,'var(--blue-lt)',false],['Less: Book Equity',-S.bookEq,'var(--red-lt)',false],['= Excess PP',S.txn-S.bookEq,'var(--amber)',true],...ppa.items.map(it=>[`  ${it.l} (${it.life}yr)`,-it.v,'var(--green-lt)',false]),['  DTL Created',ppa.dtl,'var(--red-lt)',false],['= Goodwill',ppa.gw,'#7986cb',true]].map(([l,v,c,bold])=>{const bw=Math.min((Math.abs(v)/S.txn)*100,100);return`<div class="wf-row"><div class="wf-lbl ${bold?'b':''}">${l}</div><div class="wf-track"><div class="wf-fill" style="width:${bw}%;background:${c};opacity:.7"></div></div><div class="wf-val" style="color:${v<0?'var(--red-lt)':'var(--t0)'}">${v>=0?'$':'-$'}${Math.abs(v).toFixed(0)}M</div></div>`;}).join('')}
+      </div>
+      <div class="panel">
+        <div class="ph">D&A Schedule <span class="ph-r">-$${ppa.gaapDA.toFixed(1)}M/yr</span></div>
+        <table class="tbl"><thead><tr><th class="l">Asset</th><th>FV</th><th>Life</th><th>D&A</th><th>NC?</th><th>DTL</th></tr></thead><tbody>
+          ${ppa.items.map(it=>`<tr><td class="l">${it.l}</td><td>$${it.v.toFixed(0)}M</td><td>${it.life}yr</td><td style="color:var(--red-lt)">-$${it.da.toFixed(1)}M</td><td>${bdg(it.nc?'YES':'NO',it.nc?'g':'s')}</td><td style="color:#ff8a65">-$${(it.v*S.ppaT/100).toFixed(0)}M</td></tr>`).join('')}
+          <tr class="tot"><td class="l">TOTAL</td><td>$${ppa.wu.toFixed(0)}M</td><td></td><td style="color:var(--red-lt)">-$${ppa.gaapDA.toFixed(1)}M</td><td></td><td style="color:#ff8a65">-$${ppa.dtl.toFixed(0)}M</td></tr>
+        </tbody></table>
+        <hr class="sep"><div class="al al-b"><strong>CASH EPS ADD-BACK: +$${ppa.nonCash.toFixed(1)}M/yr pre-tax</strong><p>After-tax per-share: +$${(ppa.nonCash*(1-S.ppaT/100)/eps.pfSh).toFixed(3)} (intangibles only — trademarks, technology, customer lists)</p></div>
+        <div class="stl">BS Impact</div>
+        <table class="tbl"><tbody>${[['Write-Ups ↑','+$'+ppa.wu.toFixed(0)+'M','var(--green-lt)'],['DTL ↑','-$'+ppa.dtl.toFixed(0)+'M','var(--red-lt)'],['Goodwill ↑','+$'+ppa.gw.toFixed(0)+'M','var(--amber)'],['Net Asset Δ','+$'+(ppa.gw+ppa.wu-ppa.dtl).toFixed(0)+'M','var(--blue-lt)']].map(([l,v,c])=>`<tr><td class="l">${l}</td><td style="color:${c}">${v}</td></tr>`).join('')}</tbody></table>
+      </div>
+    </div>`;
+  }
+
+  if (S.tab === 'eps') {
+    const yw=eps.years;
+    const compare=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+      <div style="background:var(--bg2);border:1px solid var(--bd);border-top:2px solid var(--blue-lt);border-radius:var(--r);padding:7px 9px">
+        <div style="font-family:var(--sans);font-size:7.5px;font-weight:700;color:var(--blue-lt);letter-spacing:1px;text-transform:uppercase;padding-bottom:4px;border-bottom:1px solid var(--bd);margin-bottom:5px">GAAP EPS</div>
+        ${yw.map(yr=>`<div class="eps-row"><span style="font-family:var(--sans);font-size:8.5px;color:var(--t1)">Year ${yr.yr} (${Math.round(yr.ph*100)}%)</span><span style="font-family:var(--mono);font-size:10px;color:${cc(yr.gaapAcc)};font-weight:600">${fp(yr.gaapAcc)}</span></div>`).join('')}
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--bd);border-top:2px solid var(--green);border-radius:var(--r);padding:7px 9px">
+        <div style="font-family:var(--sans);font-size:7.5px;font-weight:700;color:var(--green-lt);letter-spacing:1px;text-transform:uppercase;padding-bottom:4px;border-bottom:1px solid var(--bd);margin-bottom:5px">CASH EPS (NON-CASH ADD-BACK)</div>
+        ${yw.map(yr=>`<div class="eps-row"><span style="font-family:var(--sans);font-size:8.5px;color:var(--t1)">Year ${yr.yr} (${Math.round(yr.ph*100)}%)</span><span style="font-family:var(--mono);font-size:10px;color:${cc(yr.cashAcc)};font-weight:600">${fp(yr.cashAcc)}</span></div>`).join('')}
+        <div style="font-family:var(--sans);font-size:7.5px;color:var(--t3);margin-top:4px">+$${(ppa.nonCash*(1-S.ppaT/100)/eps.pfSh).toFixed(3)}/share add-back</div>
+      </div>
+    </div>`;
+    return `<div class="g4">
+      ${mc('Standalone EPS',fe(eps.baseEPS),'s','')}
+      ${mc('Y1 GAAP EPS',fe(yw[0].pfEPS),yw[0].gaapAcc>=0?'g':'r',fp(yw[0].gaapAcc))}
+      ${mc('Y2 GAAP EPS',fe(yw[1].pfEPS),yw[1].gaapAcc>=0?'g':'r',fp(yw[1].gaapAcc))}
+      ${mc('Y3 GAAP EPS',fe(yw[2].pfEPS),yw[2].gaapAcc>=0?'g':'r',fp(yw[2].gaapAcc))}
+    </div>${compare}
+    <div class="g2">
+      <div class="panel" style="overflow-y:auto;max-height:360px">
+        <div class="ph">Full EPS Bridge — 3-Year Walk <span class="ph-r">${S.circ?'AVG DEBT':'ENDING DEBT'} | GAAP + CASH</span></div>
+        ${yw.map(yr=>`<div style="margin-bottom:10px"><div class="stl" style="display:flex;justify-content:space-between"><span>YEAR ${yr.yr} — SYN ${Math.round(yr.ph*100)}%${S.circ?` | AVG $${yr.avgDebt.toFixed(0)}M`:''}</span><span style="color:${cc(yr.gaapAcc)}">GAAP ${fp(yr.gaapAcc)} / CASH ${fp(yr.cashAcc)}</span></div>
+          <table class="tbl"><thead><tr><th class="l">Line Item</th><th>$M</th><th>GAAP EPS</th><th>Cash EPS</th></tr></thead><tbody>
+          ${[['Acquirer NI',S.acqNI,eps.baseEPS,null],['+ Target NI',S.tgtNI,null,null],[`+ Synergies @${Math.round(yr.ph*100)}%`,yr.synAT,null,null],['− Interest (§163j)',-yr.intAT,null,null],['− D&A (PPA)',-yr.daAT,null,null],['− Fee Amort',-yr.feeAT,null,null],['− Ticking/Bridge',-yr.tckAT,null,null],[`+ §382 NOL`,yr.nolB,null,null],['= GAAP PF NI',yr.pfNI,yr.pfEPS,null,true],['+ Non-Cash Amort',ppa.nonCash*(1-S.tax/100),null,yr.pfCash,true]].map(([l,v,gE,cE,bold])=>`<tr style="${bold?'background:rgba(43,87,151,.05)':''}"><td class="l" style="${bold?'font-weight:600;color:var(--t0)':''}">${l}</td><td style="color:${v<0?'var(--red-lt)':v>0?'var(--green-lt)':'var(--t0)'};font-weight:${bold?600:400}">${v>=0?'+':''}${v.toFixed(0)}M</td><td style="color:${gE!=null?'var(--blue-lt)':'var(--t3)'}">${gE!=null?'$'+gE.toFixed(2):'—'}</td><td style="color:${cE!=null?'var(--green-lt)':'var(--t3)'}">${cE!=null?'$'+cE.toFixed(2):'—'}</td></tr>`).join('')}
+          </tbody></table></div>`).join('')}
+      </div>
+      <div style="display:flex;flex-direction:column;gap:9px">
+        <div class="panel">
+          <div class="ph">§163(j) Interest Cap</div>
+          <table class="tbl"><tbody>${[['Gross Interest','$'+(S.debt*S.intRate/100).toFixed(1)+'M','var(--t0)'],['30%×ATI Cap','$'+eps.cap163j.toFixed(1)+'M','var(--amber)'],['Deductible','$'+eps.deductInt.toFixed(1)+'M','var(--green-lt)'],['Disallowed',eps.excess>0?'$'+eps.excess.toFixed(1)+'M':'None',eps.excess>0?'var(--red-lt)':'var(--green-lt)']].map(([l,v,c])=>`<tr><td class="l">${l}</td><td style="color:${c}">${v}</td></tr>`).join('')}</tbody></table>
+        </div>
+        <div class="panel">
+          <div class="ph">Capital Markets Friction <span class="ph-r">${S.regDelay}mo DELAY</span></div>
+          <table class="tbl"><tbody>${[['Capitalized Fees','$'+eps.capFees.toFixed(1)+'M'],['Annual Amort.','-$'+eps.feeAmort.toFixed(1)+'M'],['Ticking Fee (Ann.)','-$'+eps.tickAnnual.toFixed(1)+'M'],['Bridge+Delay Cost','-$'+eps.tickY1.toFixed(1)+'M'],['Total Y1 Friction','-$'+(eps.feeAmort+eps.tickY1).toFixed(1)+'M']].map(([l,v])=>`<tr><td class="l">${l}</td><td>${v}</td></tr>`).join('')}</tbody></table>
+        </div>
+        <div class="panel">
+          <div class="ph">§382 NOL Schedule</div>
+          <table class="tbl"><thead><tr><th class="l">Year</th><th>Limit</th><th>Used</th><th>Remaining</th></tr></thead><tbody>
+            ${[0,1,2,3,4].map(i=>{const u=Math.min(S.s382,Math.max(0,S.nolBal-i*S.s382)),r=Math.max(0,S.nolBal-(i+1)*S.s382);return`<tr><td class="l">Yr ${i+1}</td><td>$${S.s382}M</td><td style="color:var(--green-lt)">$${u.toFixed(0)}M</td><td>$${r.toFixed(0)}M</td></tr>`;}).join('')}
+          </tbody></table>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  if (S.tab === 'credit') {
+    return `<div class="g4">
+      ${mc('Net Leverage',fx(cr.lev),cr.lev<=cr.t.ig?'g':'r','≤'+cr.t.ig+'x IG')}
+      ${mc('Interest Coverage',fx(cr.cov),cr.cov>=cr.t.cov?'g':'r','≥'+cr.t.cov+'x IG')}
+      ${mc('Implied Rating',cr.rating,cr.isIG?'g':'a',cr.t.n)}
+      ${mc('EBITDA Cushion',cr.cushion>0?'$'+cr.cushion.toFixed(0)+'M':'BREACHED',cr.cushion>0?'g':'r','to IG')}
+    </div>
+    <div class="g2">
+      <div class="panel">
+        <div class="ph">Credit Health <span class="ph-r">${cr.t.n.toUpperCase()}</span></div>
+        <div class="al ${cr.isIG?'al-g':'al-r'}"><strong>${cr.isIG?'✓ INVESTMENT GRADE':'✗ BELOW IG THRESHOLD'}</strong><p>IG thresholds: ≤${cr.t.ig}x leverage, ≥${cr.t.cov}x coverage | Sector: ${cr.t.n}</p></div>
+        ${[['Net Debt/EBITDA',cr.lev,cr.t.ig,false],['Interest Coverage',cr.cov,cr.t.cov,true]].map(([l,a,th,hi])=>{const pass=hi?a>=th:a<=th,w=Math.min((a/(th*1.8))*100,100);return`<div style="margin-bottom:9px"><div style="display:flex;justify-content:space-between;font-size:9px;margin-bottom:3px"><span style="font-family:var(--sans);color:var(--t1)">${l}</span><span style="font-family:var(--mono);color:${pass?'var(--green-lt)':'var(--red-lt)'}">${a.toFixed(2)}x / ${th}x</span></div><div class="prog"><div class="prog-fill" style="width:${w}%;background:${pass?'var(--green-lt)':'var(--red-lt)'}"></div></div></div>`;}).join('')}
+        <hr class="sep">
+        <div class="stl">Distance to Downgrade</div>
+        <div class="al ${cr.cushion>0?'al-g':'al-r'}"><strong>${cr.cushion>0?`CUSHION: $${cr.cushion.toFixed(0)}M (${cr.cushPct.toFixed(1)}% EBITDA drop allowed)`:'ALREADY BREACHED'}</strong><p>EBITDA @ IG: $${(cr.nd/cr.t.ig).toFixed(0)}M | Current: $${S.ebitda}M</p></div>
+        <div style="height:9px;background:var(--bg4);border-radius:5px;overflow:hidden;margin-top:5px"><div style="height:100%;width:${Math.min(100,Math.max(0,cr.cushPct))}%;background:${cr.cushion>0?'var(--green)':'var(--red)'};border-radius:5px;transition:width .4s"></div></div>
+      </div>
+      <div class="panel">
+        <div class="ph">Sector IG Comparison</div>
+        <table class="tbl"><thead><tr><th class="l">Sector</th><th>Max Lev</th><th>Min Cov</th><th>Status</th></tr></thead><tbody>
+          ${Object.entries(cr.TH).map(([k,v])=>{const pass=cr.lev<=v.ig&&cr.cov>=v.cov;return`<tr style="${k===S.sector?'background:rgba(43,87,151,.06)':''}"><td class="l" style="${k===S.sector?'color:var(--blue-lt);font-weight:600':''}">${v.n}${k===S.sector?' ◀':''}</td><td>${v.ig}x</td><td>${v.cov}x</td><td>${bdg(pass?'PASS':'FAIL',pass?'g':'r')}</td></tr>`}).join('')}
+        </tbody></table>
+        <hr class="sep">
+        <table class="tbl"><tbody>${[['Net Debt','$'+cr.nd.toFixed(0)+'M'],['EBITDA @ IG','$'+(cr.nd/cr.t.ig).toFixed(0)+'M'],['Cushion ($)','$'+Math.max(0,cr.cushion).toFixed(0)+'M'],['Cushion (%)',''+Math.max(0,cr.cushPct).toFixed(1)+'%']].map(([l,v])=>`<tr><td class="l">${l}</td><td>${v}</td></tr>`).join('')}</tbody></table>
+      </div>
+    </div>`;
+  }
+
+  if (S.tab === 'football') {
+    const tP=S.tgtPrice, offer=tP*(1+S.tgtPremium/100);
+    return `<div class="g4">
+      ${mc('Offer Price','$'+offer.toFixed(2),'g','')}${mc('Target Current','$'+tP.toFixed(2),'s','')}
+      ${mc('Premium to Mkt',fp(S.tgtPremium),'a','')}
+      ${mc('vs DCF Midpoint',offer>=(tP*.88+tP*1.48)/2?'+$'+(offer-(tP*.88+tP*1.48)/2).toFixed(1)+'M':'-$'+((tP*.88+tP*1.48)/2-offer).toFixed(1)+'M',offer>=(tP*.88+tP*1.48)/2?'g':'r','vs DCF mid')}
+    </div>
+    <div class="panel"><div class="ph">Football Field <span class="ph-r">6 METHODOLOGIES | OFFER NEEDLE</span></div>
+      ${footballSVG()}
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:7px">
+        ${[['#3d6fc7','52-Wk'],['#546e7a','Public Comps'],['#ffb300','Precedent'],['#7986cb','DCF'],['#ff7043','LBO'],['#4db6ac','Analysts'],['#4caf50','▲ Offer']].map(([c,l])=>`<span style="display:flex;align-items:center;gap:3px;font-family:var(--sans);font-size:7.5px;color:var(--t2)"><span style="width:12px;height:7px;background:${c}35;border:1px solid ${c};border-radius:1px;display:inline-block"></span>${l}</span>`).join('')}
+      </div>
+    </div>
+    <div style="height:10px"></div>
+    <div class="g2">
+      <div class="panel"><div class="ph">Valuation Summary</div>
+        <table class="tbl"><thead><tr><th class="l">Method</th><th>Low</th><th>High</th><th>Mid</th><th>Offer vs Mid</th></tr></thead><tbody>
+          ${[['52-Wk',tP*.72,tP*1.12],['Public Comps',tP*.82,tP*1.32],['Precedent Txns',tP*1.08,tP*1.58],['DCF (8–12%)',tP*.88,tP*1.48],['LBO (20%)',tP*.92,tP*1.22],['Analysts',tP*1.0,tP*1.38]].map(([l,lo,hi])=>{const mid=(lo+hi)/2,vo=((offer/mid)-1)*100;return`<tr><td class="l">${l}</td><td>$${lo.toFixed(1)}</td><td>$${hi.toFixed(1)}</td><td>$${mid.toFixed(1)}</td><td style="color:${vo>0?'var(--green-lt)':'var(--red-lt)'}">${fp(vo,1)}</td></tr>`;}).join('')}
+        </tbody></table>
+      </div>
+      <div class="panel"><div class="ph">Scenario Bridge</div>
+        <table class="tbl"><thead><tr><th class="l">Case</th><th>Y1 GAAP</th><th>Y1 Cash</th><th>Syn</th><th>Premium</th></tr></thead><tbody>
+          ${['base','bull','bear'].map(sc=>{const src=saved[sc]||PRESETS[sc];if(!src)return'';const tmp={...S};Object.assign(S,src);const pp2=calcPPA(),ep2=calcEPS(pp2);Object.assign(S,tmp);const isA=sc===activeScenario;return`<tr style="${isA?'background:rgba(43,87,151,.06)':''}"><td class="l" style="${isA?'color:var(--blue-lt);font-weight:600':''}">${src.label}${isA?' ◀':''}</td><td style="color:${cc(ep2.years[0].gaapAcc)}">${fp(ep2.years[0].gaapAcc,1)}</td><td style="color:${cc(ep2.years[0].cashAcc)}">${fp(ep2.years[0].cashAcc,1)}</td><td>$${src.syn}M</td><td>${fp(src.tgtPremium,1)}</td></tr>`;}).join('')}
+        </tbody></table>
+      </div>
+    </div>`;
+  }
+
+  if (S.tab === 'activist') {
+    return `<div class="g4">
+      ${mc('Acq. Ownership',cont.acqOwn.toFixed(1)+'%','b','')}${mc('Tgt. Ownership',cont.tgtOwn.toFixed(1)+'%','s','')}
+      ${mc('Max Fairness Gap',fp(cont.gaps.reduce((m,g)=>Math.max(m,Math.abs(g.gap)),0)),cont.flagged?'r':'g','>'+S.fairTh+'% = risk')}
+      ${mc('Activist Flag',cont.actFlag?'HIGH RISK':'CLEAR',cont.actFlag?'r':'g','Prem vs EBITDA')}
+    </div>
+    <div class="g2">
+      <div class="panel"><div class="ph">Activist Heatmap <span class="ph-r">PREMIUM vs EBITDA GAP</span></div>
+        ${activistHeatmap(cont)}
+        <hr class="sep">
+        <div style="display:flex;gap:8px;flex-wrap:wrap">${[['#3d0000','#ef9a9a','Gap >20%'],['#4a2000','#ffb300','Gap 10–20%'],['#2a2800','#ffe082','Gap 5–10%'],['#0a160a','#4caf50','Gap ≤5%']].map(([bg,fc,l])=>`<span style="display:flex;align-items:center;gap:4px;font-family:var(--sans);font-size:7.5px;color:var(--t2)"><span style="width:14px;height:12px;background:${bg};border-radius:1px;display:inline-block"></span>${l}</span>`).join('')}</div>
+      </div>
+      <div class="panel"><div class="ph">Contribution Analysis</div>
+        ${cont.flagged?`<div class="al al-r"><strong>⚠ FAIRNESS OPINION RECOMMENDED</strong><p>Ownership exceeds contribution by >${S.fairTh}%</p></div>`:''}
+        ${cont.gaps.map(g=>`<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px"><span style="font-family:var(--sans);font-size:9.5px;color:var(--t1)">${g.nm}</span><span style="display:flex;gap:4px">${bdg((g.gap>=0?'+':'')+g.gap.toFixed(1)+'%',g.flag?'r':'g')} ${g.flag?bdg('FLAGGED','r'):bdg('OK','g')}</span></div><div class="cb"><div class="cs" style="width:${100-g.tC}%;background:rgba(43,87,151,.45)">${(100-g.tC).toFixed(0)}%</div><div class="cs" style="width:${g.tC}%;background:rgba(255,112,67,.45)">${g.tC.toFixed(0)}%</div></div><div class="cb"><div class="cs" style="width:${cont.acqOwn}%;background:rgba(43,87,151,.2);color:var(--t2)">${cont.acqOwn.toFixed(0)}%</div><div class="cs" style="width:${cont.tgtOwn}%;background:rgba(121,134,203,.2);color:var(--t2)">${cont.tgtOwn.toFixed(0)}%</div></div><div style="font-family:var(--sans);font-size:7px;color:var(--t3);margin-top:2px">Top: contribution | Bottom: ownership</div></div>`).join('')}
+      </div>
+    </div>`;
+  }
+
+  if (S.tab === 'advisory') {
+    return `<div class="adv-intro"><b>Strategic Advisory Intelligence:</b> Real-time diagnosis of every active deal-breaker alert. Each card provides the regulatory context, exact quantitative impact from current assumptions, and a Board-level recommended action.</div>
+    ${buildAdvisory(ppa, eps, cr, col, cont, ny)}`;
+  }
+  return '';
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   DOM UPDATE STRATEGY
+   buildShell = full initial build (scenario switch only)
+   refreshDashboard = RAF-targeted updates to alerts + content only
+════════════════════════════════════════════════════════════════= */
+function getAlerts(eps, cr, col, cont, ny) {
+  return [
+    ny ? `<span class="ab ab-r">⚠ NYSE 20%</span>` : '',
+    col.status==='WALK-AWAY' ? `<span class="ab ab-r">⚠ WALK-AWAY</span>` : '',
+    !cr.isIG ? `<span class="ab ab-a">⚠ SUB-IG ${cr.rating}</span>` : '',
+    cont.actFlag ? `<span class="ab ab-a">⚠ ACTIVIST RISK</span>` : '',
+    eps.years[0].gaapAcc>=0 ? `<span class="ab ab-g">Y1 +${eps.years[0].gaapAcc.toFixed(1)}%</span>` : `<span class="ab ab-r">Y1 ${eps.years[0].gaapAcc.toFixed(1)}%</span>`,
+    S.cashEPS ? `<span class="ab ab-b">CASH ${fp(eps.years[0].cashAcc)}</span>` : '',
+    S.circ ? `<span class="ab ab-s">CIRC</span>` : '',
+  ].filter(Boolean).join('');
+}
+
+function refreshDashboard() {
+  requestAnimationFrame(() => {
+    const ppa=calcPPA(), eps=calcEPS(ppa), cr=calcCredit(), col=calcCollar(), cont=calcCont();
+    const ny=(S.newSh/S.acqSh)>0.20;
+    const alertCount=[ny,col.status==='WALK-AWAY',eps.years[0].gaapAcc<0,!cr.isIG,cont.actFlag].filter(Boolean).length;
+    // Update alerts bar (targeted)
+    const alertsEl=document.getElementById('alerts-bar');
+    if(alertsEl) alertsEl.innerHTML=getAlerts(eps,cr,col,cont,ny);
+    // Update advisory tab dot
+    const advTab=document.getElementById('tab-advisory');
+    if(advTab){
+      const hasPip=advTab.querySelector('.alert-pip');
+      if(alertCount>0&&!hasPip){const p=document.createElement('span');p.className='alert-pip';advTab.prepend(p);}
+      else if(alertCount===0&&hasPip){hasPip.remove();}
+    }
+    // Update content
+    const contentEl=document.getElementById('main-content');
+    if(contentEl) contentEl.innerHTML=buildTabContent(ppa,eps,cr,col,cont,ny);
+  });
+}
+
+function setScenarioBtns() {
+  ['base','bull','bear'].forEach(sc=>{
+    const b=document.getElementById(`sc-${sc}`);
+    if(b){b.className='sc-btn'+(sc===activeScenario?' on':'');}
+  });
+}
+
+function setTab(t){
+  S.tab=t;
+  document.querySelectorAll('.tab').forEach(el=>el.classList.remove('on'));
+  const el=document.getElementById('tab-'+t);
+  if(el)el.classList.add('on');
+  refreshDashboard();
+}
+
+function buildShell() {
+  const ppa=calcPPA(), eps=calcEPS(ppa), cr=calcCredit(), col=calcCollar(), cont=calcCont();
+  const ny=(S.newSh/S.acqSh)>0.20;
+  const alertCount=[ny,col.status==='WALK-AWAY',eps.years[0].gaapAcc<0,!cr.isIG,cont.actFlag].filter(Boolean).length;
+
+  const TABS=[{id:'collar',l:'COLLAR / ER'},{id:'ppa',l:'PPA ENGINE'},{id:'eps',l:'EPS WALK'},{id:'credit',l:'CREDIT MONITOR'},{id:'football',l:'FOOTBALL FIELD'},{id:'activist',l:'ACTIVIST HEATMAP'},{id:'advisory',l:'STRATEGIC ADVISORY',alert:alertCount>0}];
+
+  document.getElementById('app').innerHTML=`
+  <div class="shell">
+    <div class="topbar">
+      <div class="brand">
+        <span class="brand-name">NEXUS <em>M&A</em></span>
+        <span class="brand-tag">v6.0</span>
+        <div class="brand-div"></div>
+        <span class="brand-sub">Strategic Advisory Platform</span>
+      </div>
+      <div class="topbar-alerts" id="alerts-bar">${getAlerts(eps,cr,col,cont,ny)}</div>
+      <div class="topbar-right"><div class="live-pill"><div class="live-dot"></div><span class="live-lbl">ENGINE LIVE</span></div></div>
+    </div>
+    <div class="sc-bar">
+      <span class="sc-lbl">Scenario</span>
+      ${['base','bull','bear'].map(sc=>`<button id="sc-${sc}" class="sc-btn ${activeScenario===sc?'on':''}" onclick="loadScenario('${sc}')">${PRESETS[sc].label}</button>`).join('')}
+      <div class="sc-sep"></div>
+      <button class="sc-save" onclick="saveScenario('${activeScenario}')">SAVE → ${activeScenario.toUpperCase()}</button>
+      <span class="debounce-indicator" id="debounce-ind">● CALCULATING…</span>
+      <span class="sc-ind">Active: <span>${PRESETS[activeScenario]?.label||''}</span></span>
+    </div>
+    <div class="layout">
+      <div class="sidebar" id="sidebar-root">${buildSidebar()}</div>
+      <div class="main">
+        <div class="tab-row">
+          ${TABS.map(t=>`<div class="tab ${S.tab===t.id?'on':''}" id="tab-${t.id}" onclick="setTab('${t.id}')">${t.alert?'<span class="alert-pip"></span> ':''} ${t.l}</div>`).join('')}
+        </div>
+        <div class="content" id="main-content">${buildTabContent(ppa,eps,cr,col,cont,ny)}</div>
+        <div class="footer">
+          <span class="f-text">Strategic Transaction Engine</span>
+          <div class="f-dot"></div>
+          <span class="f-text">Built by <em>AARAV JAIN</em></span>
+          <div class="f-dot"></div>
+          <span class="f-text"><em>NUS MSc Finance</em></span>
+          <div class="f-dot"></div>
+          <span class="f-text">© ${new Date().getFullYear()} — All analytics are indicative only</span>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+buildShell();
+</script>
+</body>
+</html>
